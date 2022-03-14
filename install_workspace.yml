@@ -1,0 +1,11 @@
+---
+- name: Install Ros2 and DrivingSwarm Workspace
+  hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: itnok.install_ros2_ubuntu }
+  vars:
+    install_ros2_distro: "foxy"
+    install_ros2: "desktop"
+
