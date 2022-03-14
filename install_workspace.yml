@@ -19,6 +19,7 @@
 
 - name: set up git directories
   hosts: localhost
+  tasks:
     - name: setup driving swarm infrastructure repo
       git:
         repo: git@github.com:ovgu-FINken/driving_swarm_infrastructure.git
@@ -32,6 +33,7 @@
 
 - name: install python requirements
   hosts: localhost
+  tasks:
         rosdep update
         rosdep install --from-paths ~/ros/dependencies/src/ -y
 
