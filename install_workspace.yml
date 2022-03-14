@@ -10,5 +10,26 @@
     install_ros2: "desktop"
 
 - name: install python requirements
-  pip:
-    requirements: requirements.txt
+  hosts: localhost
+  tasks:
+    - name:
+      pip:
+        requirements: requirements.txt
+
+    - name: setup driving swarm infrastructure repo
+      git:
+        repo: git@github.com:ovgu-FINken/driving_swarm_infrastructure.git
+        dest: ~/ros/driving_swarm_infrastructure
+        version: master
+
+    - name: setup dependencies workspace
+      shell: |
+        mkdir -o ~/ros/dependencies/src
+        vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
+        rosdep update
+        rosdep install --from-paths ~/ros/dependencies/src/ -y
+
+    - name: build dependencies
+      shell:
+        cmd: colcon build
+        chdir: ~/ros/dependencies
