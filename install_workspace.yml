@@ -11,11 +11,14 @@
 
 - name: install python requirements
   hosts: localhost
+  become: yes
   tasks:
-    - name:
+    - name: install command
       pip:
         requirements: requirements.txt
 
+- name: set up git directories
+  hosts: localhost
     - name: setup driving swarm infrastructure repo
       git:
         repo: git@github.com:ovgu-FINken/driving_swarm_infrastructure.git
@@ -26,6 +29,9 @@
       shell: |
         mkdir -o ~/ros/dependencies/src
         vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
+
+- name: install python requirements
+  hosts: localhost
         rosdep update
         rosdep install --from-paths ~/ros/dependencies/src/ -y
 
