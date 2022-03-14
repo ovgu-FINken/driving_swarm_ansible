@@ -34,6 +34,8 @@
 - name: install python requirements
   hosts: localhost
   tasks:
+    - name: install dependencies via rosdep
+      shell: |
         rosdep update
         rosdep install --from-paths ~/ros/dependencies/src/ -y
 
