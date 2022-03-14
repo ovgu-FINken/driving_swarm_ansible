@@ -1,0 +1,10 @@
+vcs-tool
+git+https://github.com/ghliu/pyReedsShepp.git
+graph-tool
+deprecation
+skimage
+shapely
+dubins
+bezier
+pykdl
+termcolor

@@ -1,6 +1,6 @@
 ---
-- name: Install Ros2 and DrivingSwarm Workspace
-  hosts: all
+- name: Install Ros2
+  hosts: localhost
   gather_facts: yes
   become: yes
   roles:
@@ -9,3 +9,6 @@
     install_ros2_distro: "foxy"
     install_ros2: "desktop"
 
+- name: install python requirements
+  pip:
+    requirements: requirements.txt
