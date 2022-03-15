@@ -1,0 +1,68 @@
+---
+# this playbook will install and configure the chrony time sync daemon and client
+
+- name: install chrony
+  tag: chrony
+  apt:
+          name: chrony
+          state: present
+
+- name: configure chrony config
+  tag: chrony
+  template: 
+        src: chrony.conf.j2
+        dest: /etc/chrony/chrony.conf
+        owner: root
+        group: root
+        mode: 0644
+  notify: restart chrony
+
+- name: start chrony
+  tag: chrony
+  service:
+    name: chrony
+    state: started
+    enabled: yes
+      
+- name: pip requirements
+  become: yes
+  tasks:
+    - name: install command
+      pip:
+        requirements: requirements.txt
+
+- name: set up driving swarm git
+  git:
+    repo: git@github.com:ovgu-FINken/driving_swarm_infrastructure.git
+    dest: ~/ros/driving_swarm_infrastructure
+    version: master
+
+- name: setup dependencies workspace
+  shell: |
+    mkdir -o ~/ros/dependencies/src
+    vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
+
+- name: rosdep install
+  shell: |
+    rosdep update
+    rosdep install --from-paths ~/ros/dependencies/src/ -y
+    
+- name: configure .rosrc
+  template: 
+    src: rosrc.j2
+    dest: ~/.rosrc
+
+- name: add rosrc to bashrc
+  lineinfile:
+    path: ~/rosrc
+    line: source ~/.rosrc
+
+- name: build dependencies
+  shell:
+    cmd: colcon build
+    chdir: ~/ros/dependencies
+
+- name: build driving swarm
+  shell:
+    cmd: colcon build
+    chdir: ~/ros/driving_swarm_infrastructure

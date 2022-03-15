@@ -1,0 +1,5 @@
+[turtlehost]
+127.0.0.1 ansible_connection=local
+
+[turtlebot]
+127.0.0.1 ansible_connection=local
