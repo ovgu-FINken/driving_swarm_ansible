@@ -8,3 +8,9 @@
   vars:
     install_ros2_distro: "foxy"
     install_ros2: "desktop"
+
+- name: Install driving_swarm_infrastructure and requirements
+  hosts: all
+  gather_facts: yes
+  roles:
+    - common

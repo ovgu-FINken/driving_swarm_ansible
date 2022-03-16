@@ -1,14 +1,12 @@
 ---
-# this playbook will install and configure the chrony time sync daemon and client
-
 - name: install chrony
-  tag: chrony
   apt:
-          name: chrony
-          state: present
+    name: chrony
+    state: present
+  tags:
+    - chrony
 
 - name: configure chrony config
-  tag: chrony
   template: 
         src: chrony.conf.j2
         dest: /etc/chrony/chrony.conf
@@ -16,20 +14,32 @@
         group: root
         mode: 0644
   notify: restart chrony
+  tags:
+    - chrony
 
 - name: start chrony
-  tag: chrony
   service:
     name: chrony
     state: started
     enabled: yes
+  tags:
+    - chrony
       
 - name: pip requirements
   become: yes
-  tasks:
-    - name: install command
-      pip:
-        requirements: requirements.txt
+  pip:
+    name:
+      - vcs-tool
+      - git+https://github.com/ghliu/pyReedsShepp.git
+      - graph-tool
+      - deprecation
+      - skimage
+      - shapely
+      - dubins
+      - bezier
+      - pykdl
+      - termcolo
+
 
 - name: set up driving swarm git
   git:
