@@ -58,7 +58,7 @@
 
 - name: setup dependencies workspace
   shell: |
-    mkdir -o ~/ros/dependencies/src
+    mkdir -p ~/ros/dependencies/src
     vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
 
 - name: rosdep install
@@ -78,10 +78,14 @@
 
 - name: build dependencies
   shell:
-    cmd: colcon build
+    cmd: |
+      source ~/.bashrc
+      colcon build
     chdir: ~/ros/dependencies
 
 - name: build driving swarm
   shell:
-    cmd: colcon build
+    cmd: |
+      source ~/.bashrc
+      colcon build
     chdir: ~/ros/driving_swarm_infrastructure
