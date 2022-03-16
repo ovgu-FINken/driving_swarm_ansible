@@ -52,7 +52,7 @@
 
 - name: set up driving swarm git
   git:
-    repo: git@github.com:ovgu-FINken/driving_swarm_infrastructure.git
+    repo: https://github.com/ovgu-FINken/driving_swarm_infrastructure.git
     dest: ~/ros/driving_swarm_infrastructure
     version: master
 
