@@ -80,8 +80,8 @@
 - name: rosdep install
   shell: |
     source ~/.bashrc
-    rosdep update
-    rosdep install --from-paths ~/ros/dependencies/src/ -y
+    rosdep update --rosdistro foxy
+    rosdep install --rosdistro foxy --from-paths ~/ros/dependencies/src/ -y
     
 - name: build dependencies
   shell:
