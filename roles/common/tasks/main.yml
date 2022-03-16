@@ -57,10 +57,6 @@
     dest: ~/ros/driving_swarm_infrastructure
     version: master
 
-- name: create directory for dependencies workspace
-  file:
-    path: ros/dependencies/src
-    state: directory      
 
 - name: configure .rosrc
   template: 
@@ -72,7 +68,11 @@
     path: ~/.bashrc
     line: source ~/.rosrc
 
-
+- name: create directory for dependencies workspace
+  file:
+    path: ~/ros/dependencies/src
+    state: directory      
+  
 - name: setup dependencies workspace
   shell:
     vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
