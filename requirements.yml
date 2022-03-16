@@ -1,3 +1,5 @@
 ---
 roles:
   - itnok.install_ros2_ubuntu
+collections:
+  - name: community.crypto

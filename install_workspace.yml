@@ -1,4 +1,12 @@
 ---
+- name: Create SSH-Keypair if none exists
+  hosts: all
+  tasks:
+    - name: generate Keypair
+      community.crypto.openssh_keypair:
+        regenerate: never
+        path: ~/.ssh/id_rsa
+
 - name: Install Ros2
   hosts: all
   gather_facts: yes
