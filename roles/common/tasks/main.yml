@@ -28,26 +28,27 @@
   tags:
     - chrony
       
-- name: install pip
+- name: install pip and other python packages
   become: yes
   apt:
-    name: python3-pip
+    name: 
+      - python3-pip
+      - python3-vcstools
+      - python3-graph-tool
+      - python3-skimage
+      - python3-shapely
+      - python3-pykdl
+      - python3-termcolor
     state: present
       
 - name: pip requirements
   become: yes
   pip:
     name:
-      - vcs-tool
       - git+https://github.com/ghliu/pyReedsShepp.git
-      - graph-tool
       - deprecation
-      - skimage
-      - shapely
       - dubins
       - bezier
-      - pykdl
-      - termcolor
 
 
 - name: set up driving swarm git
