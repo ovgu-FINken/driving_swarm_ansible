@@ -91,7 +91,7 @@
     cmd: |
       colcon build
     chdir: ~/ros/dependencies
-    executable: bash --rcfile ~/.bashrc
+    executable: /usr/bin/bash
   tags:
     - colcon
       
@@ -105,10 +105,9 @@
 - name: build driving swarm
   shell:
     cmd: |
-      source ~/.bashrc
-      colcon build
+      . ~/.bashrc && colcon build
     chdir: ~/ros/driving_swarm_infrastructure
-    executable: bash --rcfile ~/.bashrc
+    executable: /usr/bin/bash 
   tags:
     - colcon
 
