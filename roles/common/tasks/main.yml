@@ -39,6 +39,7 @@
       - python3-pykdl
       - python3-termcolor
       - python3-rosdep2
+      - python3-colcon-common-extensions
     state: present
       
 - name: pip requirements
@@ -82,6 +83,8 @@
     source ~/.bashrc
     rosdep update --rosdistro foxy
     rosdep install --rosdistro foxy --from-paths ~/ros/dependencies/src/ -y
+  tags:
+    - rosdep
     
 - name: build dependencies
   shell:
