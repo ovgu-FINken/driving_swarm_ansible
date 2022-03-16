@@ -38,6 +38,7 @@
       - python3-shapely
       - python3-pykdl
       - python3-termcolor
+      - python3-rosdep2
     state: present
       
 - name: pip requirements
