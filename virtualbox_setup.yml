@@ -22,3 +22,7 @@
     name: drivingswarm
     groups: wheel
     append: yes
+    
+- name: reboot
+  reboot:
+  
