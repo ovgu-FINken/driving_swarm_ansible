@@ -1,21 +1,21 @@
 ---
-#- name: Create SSH-Keypair if none exists
-#  hosts: all
-#  tasks:
-#    - name: generate Keypair
-#      community.crypto.openssh_keypair:
-#        regenerate: never
-#        path: ~/.ssh/id_rsa
-#
-#- name: Install Ros2
-#  hosts: all
-#  gather_facts: yes
-#  become: yes
-#  roles:
-#    - { role: itnok.install_ros2_ubuntu }
-#  vars:
-#    install_ros2_distro: "foxy"
-#    install_ros2: "desktop"
+- name: Create SSH-Keypair if none exists
+  hosts: all
+  tasks:
+    - name: generate Keypair
+      community.crypto.openssh_keypair:
+        regenerate: never
+        path: ~/.ssh/id_rsa
+
+- name: Install Ros2
+  hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: itnok.install_ros2_ubuntu }
+  vars:
+    install_ros2_distro: "foxy"
+    install_ros2: "desktop"
 
 - name: Install driving_swarm_infrastructure and requirements
   hosts: all

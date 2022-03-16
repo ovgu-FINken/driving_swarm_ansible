@@ -69,7 +69,7 @@
 
 - name: add rosrc to bashrc
   lineinfile:
-    path: ~/.rosrc
+    path: ~/.bashrc
     line: source ~/.rosrc
 
 
