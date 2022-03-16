@@ -89,10 +89,20 @@
       source ~/.bashrc
       colcon build
     chdir: ~/ros/dependencies
-
+      
+- name: add dependencies to rosrc
+  lineinfile:
+    path: ~/.rosrc
+    line: source ~/ros/depenencies/install/setup.bash
+      
 - name: build driving swarm
   shell:
     cmd: |
       source ~/.bashrc
       colcon build
     chdir: ~/ros/driving_swarm_infrastructure
+
+- name: add driving_swarm_infrastructure to rosrc
+  lineinfile:
+    path: ~/.rosrc
+    line: source ~/ros/driving_swarm_infrastructure/install/local_setup.bash
