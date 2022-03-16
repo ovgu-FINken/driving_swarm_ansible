@@ -33,7 +33,7 @@
   apt:
     name: 
       - python3-pip
-      - python3-vcstools
+      - python3-vcstool
       - python3-skimage
       - python3-shapely
       - python3-pykdl
