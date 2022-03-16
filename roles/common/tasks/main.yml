@@ -98,7 +98,7 @@
 - name: add dependencies to rosrc
   lineinfile:
     path: ~/.rosrc
-    line: source ~/ros/depenencies/install/setup.bash
+    line: source ~/ros/dependencies/install/setup.bash
   tags:
     - colcon
       
