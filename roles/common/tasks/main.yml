@@ -40,6 +40,9 @@
       - python3-termcolor
       - python3-rosdep2
       - python3-colcon-common-extensions
+      - tmux
+      - vim
+      - htop
     state: present
       
 - name: pip requirements
