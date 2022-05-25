@@ -2,7 +2,9 @@
 
 In this repository we will host scripts to manage the software and configuration on a swarm of robots running ros2 with the DrivingSwarm framework.
 
-usage:
+### Installing Driving Swarm using Ansible
+
+First install ansbile and the neccessary components (ansible-galaxy and the ansible-galaxy packages).
 To run the ansible configuration script, modify the inventory file and run the command below.
 `ansible-playbook -i local_inventory -K install_workspace.yml`
 
