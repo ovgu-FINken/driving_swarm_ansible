@@ -1,0 +1,21 @@
+---
+# main ansible for tb project
+
+- name: update
+  hosts: turtlebot
+  become: true
+  roles:
+    - update
+
+- name: config
+  hosts: turtlebot
+  become: true
+  roles:
+    - config
+
+- name: update workspace
+  hosts: turtlebot
+  tags: build
+  become: false
+  roles:
+    - turtlebot_workspace
