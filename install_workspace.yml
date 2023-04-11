@@ -14,7 +14,7 @@
   roles:
     - { role: itnok.install_ros2_ubuntu }
   vars:
-    install_ros2_distro: "foxy"
+    install_ros2_distro: "humble"
     install_ros2: "desktop"
 
 - name: Install driving_swarm_infrastructure and requirements

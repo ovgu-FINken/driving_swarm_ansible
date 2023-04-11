@@ -36,7 +36,6 @@
       - python3-vcstool
       - python3-skimage
       - python3-shapely
-      - python3-pykdl
       - python3-termcolor
       - python3-rosdep2
       - python3-colcon-common-extensions
@@ -49,10 +48,10 @@
   become: yes
   pip:
     name:
-      - git+https://github.com/ghliu/pyReedsShepp.git
+      #- git+https://github.com/ghliu/pyReedsShepp.git
       - deprecation
-      - dubins
-      - bezier
+      #- dubins
+      #- bezier
 
 
 - name: set up driving swarm git
@@ -72,38 +71,38 @@
     path: ~/.bashrc
     line: source ~/.rosrc
 
-- name: create directory for dependencies workspace
-  file:
-    path: ~/ros/dependencies/src
-    state: directory      
-  
-- name: setup dependencies workspace
-  shell:
-    vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
-
+#- name: create directory for dependencies workspace
+#  file:
+#    path: ~/ros/dependencies/src
+#    state: directory      
+#      - name: setup dependencies workspace
+#        shell:
+#          vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
+#      
+#          
+#      - name: build dependencies
+#        shell:
+#          cmd: |
+#            colcon build
+#          chdir: ~/ros/dependencies
+#          executable: /usr/bin/bash
+#        tags:
+#          - colcon
+#            
+#      - name: add dependencies to rosrc
+#        lineinfile:
+#          path: ~/.rosrc
+#          line: source ~/ros/dependencies/install/setup.bash
+#        tags:
+#          - colcon
+      
 - name: rosdep install
   shell: |
     source ~/.bashrc
-    rosdep update --rosdistro foxy
-    rosdep install --rosdistro foxy --from-paths ~/ros/dependencies/src/ -y
+    rosdep update --rosdistro humble
+    rosdep install --rosdistro humble --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore_src
   tags:
     - rosdep
-    
-- name: build dependencies
-  shell:
-    cmd: |
-      colcon build
-    chdir: ~/ros/dependencies
-    executable: /usr/bin/bash
-  tags:
-    - colcon
-      
-- name: add dependencies to rosrc
-  lineinfile:
-    path: ~/.rosrc
-    line: source ~/ros/dependencies/install/setup.bash
-  tags:
-    - colcon
       
 - name: build driving swarm
   shell:
