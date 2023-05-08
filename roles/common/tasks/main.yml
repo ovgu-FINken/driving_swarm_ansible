@@ -33,7 +33,6 @@
   apt:
     name: 
       - python3-pip
-      - python3-vcstool
       - python3-skimage
       - python3-shapely
       - python3-termcolor
@@ -58,49 +57,29 @@
   git:
     repo: https://github.com/ovgu-FINken/driving_swarm_infrastructure.git
     dest: ~/ros/driving_swarm_infrastructure
-    version: master
+    version: "{{ros2_distribution}}"
+    accept_hostkey: yes
 
 
-- name: configure .rosrc
+- name: configure .rosrc -- turtlehost
   template: 
     src: rosrc.j2
     dest: ~/.rosrc
+  tags:
+    - rosrc
+
 
 - name: add rosrc to bashrc
   lineinfile:
     path: ~/.bashrc
     line: source ~/.rosrc
 
-#- name: create directory for dependencies workspace
-#  file:
-#    path: ~/ros/dependencies/src
-#    state: directory      
-#      - name: setup dependencies workspace
-#        shell:
-#          vcs import --input https://raw.githubusercontent.com/ovgu-FINken/driving_swarm_infrastructure/master/repo-files/turtlebot3.repos ~/ros/dependencies/src/
-#      
-#          
-#      - name: build dependencies
-#        shell:
-#          cmd: |
-#            colcon build
-#          chdir: ~/ros/dependencies
-#          executable: /usr/bin/bash
-#        tags:
-#          - colcon
-#            
-#      - name: add dependencies to rosrc
-#        lineinfile:
-#          path: ~/.rosrc
-#          line: source ~/ros/dependencies/install/setup.bash
-#        tags:
-#          - colcon
       
 - name: rosdep install
   shell: |
     source ~/.bashrc
-    rosdep update --rosdistro humble
-    rosdep install --rosdistro humble --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore_src
+    rosdep update --rosdistro "{{ros2_distribution}}"
+    rosdep install --rosdistro "{{ros2_distribution}}" --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore-src --skip-keys turtlebot3_gazebo
   tags:
     - rosdep
       

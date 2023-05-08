@@ -1,5 +1,11 @@
 export TURTLEBOT3_MODEL=burger
+source /opt/ros/{{ros2_distribution}}/local_setup.bash
+
+{% if inventory_hostname in groups['turtlehost'] %}
 source /usr/share/gazebo/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/ros/driving_swarm_infrastructure/src/driving_swarm_bringup/models/:~/ros/dependencies/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models
 export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:~/ros/driving_swarm_infrastructure/src/driving_swarm_bringup/worlds/:~/ros/dependencies/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models
-source /opt/ros/foxy/local_setup.bash
+{% endif %}
+
+# Supress deprecation warning for setuptools format
+export PYTHONWARNINGS=ignore:::setuptools.command.install

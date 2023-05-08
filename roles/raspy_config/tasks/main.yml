@@ -1,52 +1,38 @@
 ---
-# this playbook will install and configure the chrony time sync daemon and client
-# in addition it will install all turtlebot packages and configurations in the home dir
 
-- name: install chrony
-  apt:
-          name: chrony
-          state: present
-
-- name: configure chrony config
-  template: 
-        src: chrony.conf.j2
-        dest: /etc/chrony/chrony.conf
-        owner: root
-        group: root
-        mode: 0644
-  notify: restart chrony
-
-- name: start chrony
-  service:
-    name: chrony
-    state: started
-    enabled: yes
-
+# set up higher temprature limits to prevent overheating issues
+# the raspberry pi reduces its clock speed when it gets too hot which leads to higher load
+# -> if we do not rise the temp limit the raspberry pi will often lock up with overheating
 - name: configure temp limit
   template:
     src: usercfg.txt.j2
     dest: /boot/firmware/usercfg.txt
     
+# setup bash config for ros
 - name: configure rosrc
   template:
     src: rosrc.j2
     dest: /home/turtle/.rosrc
     
+# set autostart script for ros
 - name: copy autostart.bash
   template:
     src: autostart.bash.j2
     dest: /home/turtle/autostart.bash
     
+# setup distcc on turtlebot
 - name: configure distcc
   template:
     src:  distccrc.j2
     dest: /home/turtle/.distccrc
 
+# setup bash config for ros
 - name: configure bashrc
   template:
     src: bashrc.j2
     dest: /home/turtle/.bashrc
 
+# remove snapd to prevent autoupdates that lead to cpu load
 - name: Remove snapd from Ubuntu
   apt:
     name: snapd
@@ -65,21 +51,13 @@
     - /home/turtle/snap
   when: ansible_distribution == "Ubuntu"
 
+# remove unattended upgrades to prevent autoupdates that lead to cpu load
 - name: remove unattended unattended-upgrades
   apt:
     name: unattended-upgrades
     state: absent
     purge: yes
   
-- name: install ros-pkgs
-  apt:
-    pkg: 
-      - ros-foxy-rmw-cyclonedds-cpp
-      - ros-foxy-turtlebot3-bringup
-      - ros-foxy-turtlebot3-teleop
-      - ros-foxy-turtlebot3-msgs
-      - ros-foxy-turtlebot3-node
-
 - name: opencr update
   shell:
     cmd: |
