@@ -9,3 +9,8 @@ export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:~/ros/driving_swarm_infrastruc
 
 # Supress deprecation warning for setuptools format
 export PYTHONWARNINGS=ignore:::setuptools.command.install
+export ROS_LOCALHOST_ONLY=1
+
+{% if inventory_hostname in groups['turtlebot'] %}
+export LDS_MODEL=LDS1
+{% endif %}

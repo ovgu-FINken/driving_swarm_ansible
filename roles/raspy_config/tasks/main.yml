@@ -7,30 +7,14 @@
   template:
     src: usercfg.txt.j2
     dest: /boot/firmware/usercfg.txt
-    
-# setup bash config for ros
-- name: configure rosrc
-  template:
-    src: rosrc.j2
-    dest: /home/turtle/.rosrc
-    
-# set autostart script for ros
-- name: copy autostart.bash
-  template:
-    src: autostart.bash.j2
-    dest: /home/turtle/autostart.bash
+  tags: temp_limit
     
 # setup distcc on turtlebot
 - name: configure distcc
   template:
     src:  distccrc.j2
     dest: /home/turtle/.distccrc
-
-# setup bash config for ros
-- name: configure bashrc
-  template:
-    src: bashrc.j2
-    dest: /home/turtle/.bashrc
+  tags: distcc
 
 # remove snapd to prevent autoupdates that lead to cpu load
 - name: Remove snapd from Ubuntu
@@ -57,11 +41,30 @@
     name: unattended-upgrades
     state: absent
     purge: yes
+      
+
+- name: remove old opencr update
+  file: 
+    path: ~/opencr_update.tar.bz2
+    state: absent
+  tags: opencr
+
+
+- name: add libc6 for armhf to dpkg
+  shell:
+    cmd: dpkg --add-architecture armhf
+  tags: opencr
+
+- name: install libc6 for armhf
+  apt:
+    name: libc6:armhf
+    state: present
+    update_cache: yes
+  tags: opencr
   
 - name: opencr update
   shell:
     cmd: |
-      rm -rf ./opencr_update.tar.bz2
       wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2
       tar -xvf opencr_update.tar.bz2
       cd opencr_update
@@ -69,7 +72,24 @@
   tags: opencr
 
 
+- name: install robot_upstart
+  apt:
+    name: "ros-{{ ros2_distribution }}-robot-upstart"
+    state: present
 
+- name: upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: yes
+  tags: upgrade, update
+
+
+## swapfile for compilation
+
+## checkout tb3 package
+
+## compile tb3 package with colcon build
+# MAKEFLAGS="-j1"
 
 - name: reboot
   reboot:

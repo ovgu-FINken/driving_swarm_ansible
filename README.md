@@ -33,3 +33,5 @@ Then:
 * Install driving swarm git repo
 * Install dependencies via rosdep
 * Install script to run driving swarm automatically
+* Install launchfile as systemd-service
+* Setup zenoh-bridge (start on boot)

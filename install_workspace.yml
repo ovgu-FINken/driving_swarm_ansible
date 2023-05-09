@@ -30,3 +30,14 @@
     - common
   vars:
     ros2_distribution: humble
+
+- name: configure and update turtlebot
+  hosts: turtlebot
+  gather_facts: yes
+  become: yes
+  roles:
+    - raspy_config
+  vars:
+    ros2_distribution: humble
+  tags:
+    - raspy_config

@@ -41,6 +41,7 @@
       - tmux
       - vim
       - htop
+      - distcc
     state: present
       
 - name: pip requirements
