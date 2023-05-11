@@ -1,16 +1,21 @@
+# export general settings
 export TURTLEBOT3_MODEL=burger
+export ROS_LOCALHOST_ONLY=0
+export ROS_DOMAIN_ID={{domain_id}}
 source /opt/ros/{{ros2_distribution}}/local_setup.bash
+source ~/ros/driving_swarm_infrastructure/install/setup.bash
+
+# Supress deprecation warning for setuptools format
+export PYTHONWARNINGS=ignore:::setuptools.command.install
 
 {% if inventory_hostname in groups['turtlehost'] %}
+# export gazebo settings
 source /usr/share/gazebo/setup.sh
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/ros/driving_swarm_infrastructure/src/driving_swarm_bringup/models/:~/ros/dependencies/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models
 export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:~/ros/driving_swarm_infrastructure/src/driving_swarm_bringup/worlds/:~/ros/dependencies/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models
 {% endif %}
 
-# Supress deprecation warning for setuptools format
-export PYTHONWARNINGS=ignore:::setuptools.command.install
-export ROS_LOCALHOST_ONLY=1
-
 {% if inventory_hostname in groups['turtlebot'] %}
+# LDS model for laser scanner -- set to LDS2 for turtlebots with new laser scanner
 export LDS_MODEL=LDS1
 {% endif %}

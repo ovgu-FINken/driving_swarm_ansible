@@ -9,6 +9,33 @@
     dest: /boot/firmware/usercfg.txt
   tags: temp_limit
     
+- name: install launch script    
+  template:
+    src: core.sh.j2
+    dest: /home/turtle/core.sh
+    owner: turtle
+  tags: autostart
+
+- name: install systemd service
+  template:
+    src: DrivingSwarmCore.service.j2
+    dest: /etc/systemd/system/DrivingSwarmCore.service
+  tags: autostart
+
+- name: enable systemd service
+  systemd:
+    name: DrivingSwarmCore.service
+    enabled: yes
+    state: started
+  tags: autostart
+
+- name: enable zenoh bridge
+  systemd:
+    name: zenoh-bridge-dds.service
+    enabled: yes
+    state: started
+  tags: autostart, zenoh
+
 # setup distcc on turtlebot
 - name: configure distcc
   template:

@@ -1,0 +1,12 @@
+[Unit]
+Description=driving swarm core
+After=network-online.target
+
+[Service]
+Type=simple
+User=turtle
+Group=turtle
+ExecStart=/home/turtle/core.sh
+
+[Install]
+WantedBy=multi-user.target

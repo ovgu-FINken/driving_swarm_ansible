@@ -1,0 +1,9 @@
+## set the domain id for each host individually
+## domain IDs 0-101 and 215-232 can be safely used 
+
+[turtlebot]
+#10.61.10.236 ansible_connection=ssh ansible_ssh_user=turtle domain_id=1
+10.61.10.208 ansible_connection=ssh ansible_ssh_user=turtle domain_id=2
+
+[turtlehost]
+#localhost ansible_connection=local domain_id=215

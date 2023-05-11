@@ -60,6 +60,8 @@
     dest: ~/ros/driving_swarm_infrastructure
     version: "{{ros2_distribution}}"
     accept_hostkey: yes
+  tags: 
+    - git
 
 
 - name: configure .rosrc -- turtlehost
@@ -74,6 +76,8 @@
   lineinfile:
     path: ~/.bashrc
     line: source ~/.rosrc
+  tags:
+    - rosrc
 
       
 - name: rosdep install
@@ -92,6 +96,7 @@
     executable: /usr/bin/bash 
   tags:
     - colcon
+    - git
 
 - name: add driving_swarm_infrastructure to rosrc
   lineinfile:
@@ -99,3 +104,15 @@
     line: source ~/ros/driving_swarm_infrastructure/install/local_setup.bash
   tags:
     - colcon
+    - git
+      
+- name: install config for zenoh-bridge-dds.service
+  template:
+    src: zenoh.conf.j2
+    dest: /etc/zenoh-bridge-dds/conf.json5
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - zenoh
+    - autostart
