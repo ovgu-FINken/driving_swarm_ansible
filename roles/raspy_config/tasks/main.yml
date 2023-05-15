@@ -8,6 +8,13 @@
     src: usercfg.txt.j2
     dest: /boot/firmware/usercfg.txt
   tags: temp_limit
+
+# this will display the ip address on the login screen
+- name: setup issues file
+  template:
+    src: 00_ip.txt.j2
+    dest: /etc/issue.d/00_ip.txt
+  tags: autostart
     
 - name: install launch script    
   template:

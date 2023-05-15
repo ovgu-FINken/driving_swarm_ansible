@@ -64,7 +64,7 @@
     - git
 
 
-- name: configure .rosrc -- turtlehost
+- name: configure .rosrc
   template: 
     src: rosrc.j2
     dest: ~/.rosrc
