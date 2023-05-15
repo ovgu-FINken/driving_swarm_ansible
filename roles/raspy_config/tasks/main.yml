@@ -9,6 +9,12 @@
     dest: /boot/firmware/usercfg.txt
   tags: temp_limit
 
+- name: create directory /etc/issue.d
+  file:
+    path: /etc/issue.d
+    state: directory
+  tags: autostart
+
 # this will display the ip address on the login screen
 - name: setup issues file
   template:
