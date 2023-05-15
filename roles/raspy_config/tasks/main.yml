@@ -9,24 +9,21 @@
     dest: /boot/firmware/usercfg.txt
   tags: temp_limit
 
-- name: create directory /etc/issue.d
-  file:
-    path: /etc/issue.d
-    state: directory
-  tags: autostart
 
 # this will display the ip address on the login screen
-- name: setup issues file
-  template:
-    src: 00_ip.txt.j2
-    dest: /etc/issue.d/00_ip.txt
+- name: display ip in login screen
+  lineinfile:
+    path: /etc/issue
+    line: "IP address: \\4{wlan0}"
   tags: autostart
     
-- name: install launch script    
+- name: install launch script 
   template:
     src: core.sh.j2
     dest: /home/turtle/core.sh
     owner: turtle
+    group: turtle
+    mode: 0777
   tags: autostart
 
 - name: install systemd service
@@ -111,25 +108,11 @@
       ./update.sh /dev/ttyACM0 burger.opencr
   tags: opencr
 
-
-- name: install robot_upstart
-  apt:
-    name: "ros-{{ ros2_distribution }}-robot-upstart"
-    state: present
-
 - name: upgrade apt packages
   apt:
     update_cache: yes
     upgrade: yes
   tags: upgrade, update
-
-
-## swapfile for compilation
-
-## checkout tb3 package
-
-## compile tb3 package with colcon build
-# MAKEFLAGS="-j1"
 
 - name: reboot
   reboot:
