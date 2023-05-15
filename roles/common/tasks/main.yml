@@ -91,7 +91,7 @@
 - name: build driving swarm
   shell:
     cmd: |
-      . ~/.bashrc && colcon build
+      . ~/.bashrc && colcon build {{ %inventory_hostname in groups['turtlebot'] }} --executor sequential {{ %endif }}
     chdir: ~/ros/driving_swarm_infrastructure
     executable: /usr/bin/bash 
   tags:
