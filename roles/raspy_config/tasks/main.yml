@@ -83,15 +83,6 @@
     purge: yes
       
 
-- name: remove old opencr update
-  file: 
-    path: "{{ item }}"
-    state: absent
-  with_fileglob:
-    - /home/turtle/opencr_update*
-  tags: opencr
-
-
 - name: add libc6 for armhf to dpkg
   shell:
     cmd: dpkg --add-architecture armhf
@@ -107,6 +98,7 @@
 - name: opencr update
   shell:
     cmd: |
+      rm -rf opencr_update*
       wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS2/latest/opencr_update.tar.bz2
       tar -xvf opencr_update.tar.bz2
       cd opencr_update
