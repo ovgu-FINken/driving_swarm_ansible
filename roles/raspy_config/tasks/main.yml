@@ -87,9 +87,8 @@
   file: 
     path: "{{ item }}"
     state: absent
-  with_items:
-    - ~/opencr_update.tar.bz2
-    - ~/opencr_update
+  with_fileglob:
+    - /home/turtle/opencr_update*
   tags: opencr
 
 
