@@ -1,0 +1,58 @@
+---
+
+- name: stop driving swarm service
+  service:
+    name: driving_swarm
+    state: stopped
+    enabled: yes
+  tags:
+    - stop
+      
+
+- name: set up driving swarm git
+  git:
+    repo: https://github.com/ovgu-FINken/driving_swarm_infrastructure.git
+    dest: ~/ros/driving_swarm_infrastructure
+    version: "{{ros2_distribution}}"
+    accept_hostkey: yes
+    force: yes
+  tags: 
+    - git
+
+- name: build driving swarm
+  shell:
+    cmd: |
+      . ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
+    chdir: ~/ros/driving_swarm_infrastructure
+    executable: /usr/bin/bash 
+  tags:
+    - colcon
+    - git
+
+- name: start driving swarm service
+  service:
+    name: driving_swarm
+    state: started
+    enabled: yes
+  tags:
+    - start
+
+## reboot the turtlebots
+- name: reboot turtlebots
+  reboot:
+    msg: "Rebooting by ansible"
+    connect_timeout: 5
+    reboot_timeout: 600
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: whoami
+  tags: 
+    - reboot
+
+- name: power off turtlebots
+  command: "poweroff"
+  tags: 
+    - poweroff
+  ignore_errors: yes
+  ignore_unreachable: yes
+  when: inventory_hostname in groups['turtlebot']

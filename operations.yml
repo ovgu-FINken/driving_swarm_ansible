@@ -1,0 +1,10 @@
+---
+
+- name: operations
+  hosts: turtlebot
+  gather_facts: yes
+  become: yes
+  roles:
+    - operations
+  vars:
+    ros2_distribution: humble
