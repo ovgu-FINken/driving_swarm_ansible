@@ -2,7 +2,7 @@
 
 - name: stop driving swarm service
   service:
-    name: driving_swarm
+    name: DrivingSwarmCore
     state: stopped
     enabled: yes
   tags:
@@ -31,7 +31,7 @@
 
 - name: start driving swarm service
   service:
-    name: driving_swarm
+    name: DrivingSwarmCore
     state: started
     enabled: yes
   tags:
