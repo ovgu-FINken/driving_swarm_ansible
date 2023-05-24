@@ -1,5 +1,17 @@
 ---
 
+- name: set hostname
+  hostname:
+    name: "turtlebot{{ domain_id }}"
+  tags: hostname
+
+- name: disable hostname changing of cloud init
+  lineinfile:
+    path: /etc/cloud/cloud.cfg
+    regexp: '^preserve_hostname'
+    line: 'preserve_hostname: true'
+  tags: hostname
+
 - name: install launch script 
   template:
     src: core.sh.j2
@@ -105,6 +117,31 @@
       ./update.sh /dev/ttyACM0 burger.opencr
   tags: opencr
 
+- name: install telegraf
+  apt:
+    name: telegraf
+    state: present
+  tags: telegraf
+
+# generate config with 
+# telegraf config --input-filter cpu:mem:swap:net:system --output-filter influxdb --section-filter agent:global_tags:inputs:outputs > roles/raspy_config/templates/telegraf.conf.j2
+# and modify
+# 
+# possibly useful: chrony, wireless, ping
+
+- name: install telegraf config
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+  tags: telegraf
+
+- name: enable telegraf
+  systemd:
+    name: telegraf.service
+    enabled: yes
+    state: started
+  tags: telegraf
+
 - name: upgrade apt packages
   apt:
     update_cache: yes
@@ -119,3 +156,4 @@
     pre_reboot_delay: 0
     post_reboot_delay: 30
     test_command: whoami
+  tags: reboot
