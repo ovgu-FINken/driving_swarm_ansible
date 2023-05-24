@@ -9,26 +9,6 @@
     - stop
       
 
-- name: set up driving swarm git
-  git:
-    repo: https://github.com/ovgu-FINken/driving_swarm_infrastructure.git
-    dest: ~/ros/driving_swarm_infrastructure
-    version: "{{ros2_distribution}}"
-    accept_hostkey: yes
-    force: yes
-  tags: 
-    - git
-
-- name: build driving swarm
-  shell:
-    cmd: |
-      . ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
-    chdir: ~/ros/driving_swarm_infrastructure
-    executable: /usr/bin/bash 
-  tags:
-    - colcon
-    - git
-
 - name: start driving swarm service
   service:
     name: DrivingSwarmCore
