@@ -6,11 +6,13 @@
 #10.61.10.246 ansible_connection=ssh ansible_ssh_user=turtle domain_id=5
 #10.61.10.248 ansible_connection=ssh ansible_ssh_user=turtle domain_id=6
 #10.61.10.224 ansible_connection=ssh ansible_ssh_user=turtle domain_id=7
+#10.61.10.227 ansible_connection=ssh ansible_ssh_user=turtle domain_id=9
+
 
 [turtlebot:demo]
-10.61.10.201 ansible_connection=ssh ansible_ssh_user=turtle domain_id=101
-10.61.10.241 ansible_connection=ssh ansible_ssh_user=turtle domain_id=100
-10.61.10.251 ansible_connection=ssh ansible_ssh_user=turtle domain_id=99
+10.61.10.132 ansible_connection=ssh ansible_ssh_user=turtle domain_id=101
+10.61.10.133 ansible_connection=ssh ansible_ssh_user=turtle domain_id=100
+10.61.10.134 ansible_connection=ssh ansible_ssh_user=turtle domain_id=99
 10.61.10.138 ansible_connection=ssh ansible_ssh_user=turtle domain_id=98
 
 [turtlehost]
