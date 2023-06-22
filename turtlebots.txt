@@ -9,7 +9,7 @@
 #10.61.10.227 ansible_connection=ssh ansible_ssh_user=turtle domain_id=9
 
 
-[turtlebot:demo]
+[demo]
 10.61.10.232 ansible_connection=ssh ansible_ssh_user=turtle domain_id=101
 10.61.10.245 ansible_connection=ssh ansible_ssh_user=turtle domain_id=100
 10.61.10.218 ansible_connection=ssh ansible_ssh_user=turtle domain_id=99
@@ -17,3 +17,6 @@
 
 [turtlehost]
 #localhost ansible_connection=local domain_id=215
+
+[turtlebot:children]
+demo
