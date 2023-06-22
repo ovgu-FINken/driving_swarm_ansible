@@ -1,3 +1,7 @@
 #!/bin/bash
 source /home/turtle/.rosrc
+{% if 'demo' in group_names %}
+ros2 launch driving_swarm_core driving_swarm_demo.launch.py
+{% else %}
 ros2 launch driving_swarm_core driving_swarm_core.launch.py
+{% endif %}
