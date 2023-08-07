@@ -27,7 +27,10 @@ Then:
 * Copy the SD-Card for other robots
 
 ### Run ansible script
+To run the script you have to modify an 'inventory file' which holds the hostname and config variables for each host.
+You can use the file `turtlebots.txt` as an example.
 
+The script will:
 * Install ros2 humble
 * Install and setup zenohd, zenoh-bridge-dds, ...
 * Install driving swarm git repo
