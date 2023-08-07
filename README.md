@@ -26,7 +26,8 @@ Then:
 * Set correct ntp-server (in case some firewall admin decides that ntp is not that useful ...)
 * Copy the SD-Card for other robots
 
-### Run ansible script
+### Run ansible script for the Turtlebot(s)
+
 To run the script you have to modify an 'inventory file' which holds the hostname and config variables for each host.
 You can use the file `turtlebots.txt` as an example.
 
@@ -37,4 +38,6 @@ The script will:
 * Install dependencies via rosdep
 * Install script to run driving swarm automatically
 * Install launchfile as systemd-service
+* Disable automatic updates
+* Change the hostname and ros prefix
 * Setup zenoh-bridge (start on boot)
