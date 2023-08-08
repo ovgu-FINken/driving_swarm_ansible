@@ -14,14 +14,14 @@ Install the ansible package via `apt install ansible` or `pip install ansible`. 
 
 ### Adapt the inventory file
 
-You the file `turtlebots.txt` as an example. The content of the file should look like this:
+You the file `turtlebots.txt` as an example. The content of the file should look like this lines starting with `#` are comments:
 ```
 ## set the domain id for each host individually
 ## domain IDs 0-101 and 215-232 can be safely used 
 
 [turtlebot]
-#10.61.10.236 ansible_connection=ssh ansible_ssh_user=turtle domain_id=1
-#10.61.10.246 ansible_connection=ssh ansible_ssh_user=turtle domain_id=5
+10.61.10.236 ansible_connection=ssh ansible_ssh_user=turtle domain_id=1
+10.61.10.246 ansible_connection=ssh ansible_ssh_user=turtle domain_id=5
 
 
 [demo]
@@ -29,7 +29,7 @@ You the file `turtlebots.txt` as an example. The content of the file should look
 #10.61.10.245 ansible_connection=ssh ansible_ssh_user=turtle domain_id=100
 
 [turtlehost]
-#localhost ansible_connection=local domain_id=215
+localhost ansible_connection=local domain_id=215
 
 [turtlebot:children]
 demo
