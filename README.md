@@ -85,3 +85,8 @@ The script will:
 * Disable automatic updates
 * Change the hostname and ros prefix
 * Setup zenoh-bridge (start on boot)
+
+
+### Common Problems
+
+- Unattended upgrade keeps the lock file for dpkg or apt - either wait until the update is finished in the background or disable the unattended upgrades service `systemctl stop unattended-upgrades` on the turtlebot.
