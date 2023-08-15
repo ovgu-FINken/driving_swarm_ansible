@@ -1,6 +1,6 @@
 [Unit]
 Description=driving swarm core
-After=network-online.target
+After=network-online.target,zenoh-bridge-dds.service
 
 [Service]
 Type=simple

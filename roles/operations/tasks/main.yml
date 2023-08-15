@@ -8,6 +8,21 @@
   tags:
     - stop
       
+- name: stop zenoh-bridge-dds.service
+  service:
+    name: zenoh-bridge-dds.service
+    state: stopped
+    enabled: yes
+  tags:
+    - stop
+    
+- name: start zenoh-bridge-dds.service
+  service:
+    name: zenoh-bridge-dds.service
+    state: started
+    enabled: yes
+  tags:
+    - start
 
 - name: start driving swarm service
   service:
@@ -28,11 +43,3 @@
     test_command: whoami
   tags: 
     - reboot
-
-- name: power off turtlebots
-  command: "poweroff"
-  tags: 
-    - poweroff
-  ignore_errors: yes
-  ignore_unreachable: yes
-  when: inventory_hostname in groups['turtlebot']

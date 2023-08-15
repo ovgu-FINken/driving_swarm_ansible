@@ -23,12 +23,6 @@
     state: present
     filename: ros2-latest
       
-# echo"deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
-- name: Install zenoh sources
-  apt_repository:
-    repo: "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /"
-    state: present
-
 # sudo apt install ros-<distro>-ros-base
 - name: Install ROS2
   apt:
@@ -37,13 +31,3 @@
   vars:
     packages:
       - "{{ 'ros-' + ros2_distribution + '-' + ros2_configuration }}"
-
-- name: Install zenoh packages
-  apt:
-    name: "{{ packages }}"
-    update_cache: no
-  vars:
-    packages:
-    - zenoh
-    - zenoh-plugin-dds
-    - zenoh-bridge-dds

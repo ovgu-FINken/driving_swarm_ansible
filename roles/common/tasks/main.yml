@@ -27,6 +27,13 @@
     enabled: yes
   tags:
     - chrony
+
+# echo"deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+- name: Install zenoh sources
+  apt_repository:
+    repo: "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /"
+    state: present
+
       
 - name: install pip and other python packages
   become: yes
@@ -84,7 +91,7 @@
   shell: |
     source ~/.bashrc
     rosdep update --rosdistro "{{ros2_distribution}}"
-    rosdep install --rosdistro "{{ros2_distribution}}" --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore-src --skip-keys turtlebot3_gazebo
+    rosdep install --rosdistro "{{ros2_distribution}}" --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore-src {% if inventory_hostname in groups['turtlebot'] %} --skip-keys turtlebot3_gazebo {% endif %}
   tags:
     - rosdep
       
@@ -105,6 +112,19 @@
   tags:
     - colcon
     - git
+
+- name: Install zenoh packages
+  apt:
+    name: "{{ packages }}"
+    update_cache: no
+  vars:
+    packages:
+    - zenoh=0.7.2-rc
+    - zenoh-plugin-dds=0.7.2-rc
+    - zenoh-bridge-dds=0.7.2-rc
+  tags:
+    - zenoh
+
       
 - name: install config for zenoh-bridge-dds.service
   template:
