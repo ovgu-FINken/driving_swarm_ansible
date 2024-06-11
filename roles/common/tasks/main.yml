@@ -98,11 +98,12 @@
 - name: build driving swarm
   shell:
     cmd: |
-      . ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
+      source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
     chdir: ~/ros/driving_swarm_infrastructure
     executable: /usr/bin/bash 
   tags:
     - colcon
+    - build
     - git
 
 - name: add driving_swarm_infrastructure to rosrc
@@ -119,9 +120,9 @@
     update_cache: no
   vars:
     packages:
-    - zenoh=0.7.2-rc
-    - zenoh-plugin-dds=0.7.2-rc
-    - zenoh-bridge-dds=0.7.2-rc
+    - zenoh
+    - zenoh-plugin-dds
+    - zenoh-bridge-dds
   tags:
     - zenoh
 
