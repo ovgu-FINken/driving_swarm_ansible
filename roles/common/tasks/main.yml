@@ -30,6 +30,7 @@
 
 # echo"deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 - name: Install zenoh sources
+  become: yes
   apt_repository:
     repo: "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /"
     state: present
