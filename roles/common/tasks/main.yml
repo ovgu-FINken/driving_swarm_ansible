@@ -121,10 +121,14 @@
     update_cache: no
   become: yes
   vars:
+    zenoh_version: "0.11.0-stable"
     packages:
-    - zenoh
-    - zenoh-plugin-dds
-    - zenoh-bridge-dds
+      - zenoh={{ zenoh_version }}
+      - zenoh-plugin-ros2dds={{ zenoh_version }}
+      - zenoh-bridge-ros2dds={{ zenoh_version }}
+      - zenohd={{ zenoh_version }}
+      - zenoh-plugin-rest={{ zenoh_version }}
+      - zenoh-plugin-storage-manager={{ zenoh_version }}
   tags:
     - zenoh
 
