@@ -6,6 +6,8 @@
       community.crypto.openssh_keypair:
         regenerate: never
         path: ~/.ssh/id_rsa
+  tags:
+    - ssh
 
 - name: Install Ros2
   hosts: all
@@ -21,6 +23,8 @@
     ros2_user:
       name: turtle
       group: turtle
+  tags:
+    - install_humble
     
 
 - name: Install driving_swarm_infrastructure and requirements
@@ -30,6 +34,8 @@
     - common
   vars:
     ros2_distribution: humble
+  tags:
+    - common
 
 - name: configure and update turtlebot
   hosts: turtlebot
