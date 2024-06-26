@@ -119,6 +119,7 @@
   apt:
     name: "{{ packages }}"
     update_cache: no
+    allow_downgrade: yes
   become: yes
   vars:
     zenoh_version: "0.11.0-stable"
