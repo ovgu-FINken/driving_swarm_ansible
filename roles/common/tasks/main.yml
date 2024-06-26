@@ -137,7 +137,7 @@
 - name: install config for zenoh-bridge-dds.service
   template:
     src: zenoh.conf.j2
-    dest: /etc/zenoh-bridge-dds/conf.json5
+    dest: /etc/zenoh-bridge-ros2dds/conf.json5
     owner: root
     group: root
   become: yes
