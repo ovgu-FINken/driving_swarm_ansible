@@ -86,8 +86,8 @@
     line: source ~/.rosrc
   tags:
     - rosrc
-
       
+
 - name: rosdep install
   shell: |
     source ~/.bashrc
@@ -97,11 +97,9 @@
     - rosdep
       
 - name: build driving swarm
-  shell:
-    cmd: |
-      source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
-    chdir: ~/ros/driving_swarm_infrastructure
-    executable: /usr/bin/bash 
+  shell: |
+      source ~/.bashrc
+      colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
   tags:
     - colcon
     - build
