@@ -28,14 +28,6 @@
   tags:
     - chrony
 
-# echo"deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
-- name: Install zenoh sources
-  become: yes
-  apt_repository:
-    repo: "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /"
-    state: present
-
-      
 - name: install pip and other python packages
   become: yes
   apt:
@@ -50,6 +42,7 @@
       - vim
       - htop
       - distcc
+      - ros-humble-rmw-zenoh-cpp
     state: present
       
 - name: pip requirements
@@ -115,32 +108,3 @@
     - colcon
     - git
 
-- name: Install zenoh packages
-  apt:
-    name: "{{ packages }}"
-    update_cache: no
-    allow_downgrade: yes
-  become: yes
-  vars:
-    zenoh_version: "1.3.4"
-    packages:
-      - zenoh={{ zenoh_version }}
-      - zenoh-plugin-ros2dds={{ zenoh_version }}
-      - zenoh-bridge-ros2dds={{ zenoh_version }}
-      - zenohd={{ zenoh_version }}
-      - zenoh-plugin-rest={{ zenoh_version }}
-      - zenoh-plugin-storage-manager={{ zenoh_version }}
-  tags:
-    - zenoh
-
-      
-- name: install config for zenoh-bridge-dds.service
-  template:
-    src: zenoh.conf.j2
-    dest: /etc/zenoh-bridge-ros2dds/conf.json5
-    owner: root
-    group: root
-  become: yes
-  tags:
-    - zenoh
-    - autostart
