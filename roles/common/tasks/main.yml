@@ -96,8 +96,11 @@
     - rosdep
       
 - name: build driving swarm
-  shell: |
-      bash -c "source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}"t 
+  become: no
+  shell: source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
+  args:
+    chdir: ~/ros/driving_swarm_infrastructure
+    executable: /bin/bash
   tags:
     - colcon
     - build
