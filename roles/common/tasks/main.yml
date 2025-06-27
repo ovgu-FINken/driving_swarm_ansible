@@ -28,6 +28,11 @@
   tags:
     - chrony
 
+- name: install zenoh sources
+  become: yes
+  shell: |
+     echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee -a /etc/apt/sources.list > /dev/null
+
 - name: install pip and other python packages
   become: yes
   apt:
@@ -44,6 +49,7 @@
       - distcc
       - zenoh-bridge-ros2dds
     state: present
+    update_cache: yes
       
 - name: pip requirements
   become: yes
@@ -91,7 +97,7 @@
       
 - name: build driving swarm
   shell: |
-      bash -c "source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}"
+      bash -c "source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}"t 
   tags:
     - colcon
     - build
