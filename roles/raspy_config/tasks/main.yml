@@ -56,7 +56,7 @@
     
 - name: enable zenoh bridge
   systemd:
-    name: zenoh-bridge-dds.service
+    name: zenoh-bridge-ros2dds.service
     enabled: yes
     state: started
   tags: autostart, zenoh
