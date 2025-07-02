@@ -49,6 +49,7 @@
       - distcc
       - zenoh-bridge-ros2dds
       - ros-humble-rmw-cyclonedds-cpp
+      - ros-humble-xacro
     state: present
     update_cache: yes
       
