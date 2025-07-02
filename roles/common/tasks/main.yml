@@ -48,6 +48,7 @@
       - htop
       - distcc
       - zenoh-bridge-ros2dds
+      - ros-humble-rmw-cyclonedds-cpp
     state: present
     update_cache: yes
       
@@ -113,4 +114,32 @@
   tags:
     - colcon
     - git
+  
 
+- name: Create systemd unit for zenoh-bridge-ros2dds
+  become: yes
+  copy:
+    dest: /etc/systemd/system/zenoh-bridge-ros2dds.service
+    content: |
+      [Unit]
+      Description=Zenoh ROS 2 DDS Bridge
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/bin/zenoh-bridge-ros2dds -e tcp/192.168.8.220:7447
+      Restart=on-failure
+      User=root
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: '0644'
+  tags:
+    - zenoh
+
+
+- name: Enable zenoh-bridge-dds systemd service
+  become: yes
+  systemd:
+    name: zenoh-bridge-dds
+    enabled: yes
+    daemon_reload: yes
