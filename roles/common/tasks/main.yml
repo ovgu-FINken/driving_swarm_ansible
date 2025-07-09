@@ -137,10 +137,11 @@
   tags:
     - zenoh
 
-
-- name: Enable zenoh-bridge-dds systemd service
+- name: Enable zenoh-bridge-ros2dds systemd service
   become: yes
   systemd:
-    name: zenoh-bridge-dds
+    name: zenoh-bridge-ros2dds
     enabled: yes
     daemon_reload: yes
+    state: started
+
