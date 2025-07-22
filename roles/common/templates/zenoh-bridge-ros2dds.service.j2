@@ -1,11 +1,11 @@
 [Unit]
 Description=Custom Zenoh Bridge for ROS2
-After=network-online.target
-Wants=network-online.target
+After=network-online.target DrivingSwarmCore.service
+Wants=network-online.target DrivingSwarmCore.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/zenoh-bridge-ros2dds -e tcp/192.168.8.220:7447
+ExecStart=/bin/bash -c "source /opt/ros/humble/setup.bash && exec /usr/bin/zenoh-bridge-ros2dds -e tcp/192.168.8.220:7447"
 Restart=on-failure
 RestartSec=2
 Environment=RUST_LOG=info
