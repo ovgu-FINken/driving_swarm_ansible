@@ -87,7 +87,6 @@
     line: source ~/.rosrc
   tags:
     - rosrc
-      
 
 - name: rosdep install
   shell: |
@@ -96,10 +95,11 @@
     rosdep install --rosdistro "{{ros2_distribution}}" --from-paths ~/ros/driving_swarm_infrastructure/src/ -y --ignore-src {% if inventory_hostname in groups['turtlebot'] %} --skip-keys turtlebot3_gazebo {% endif %}
   tags:
     - rosdep
-      
+  
 - name: build driving swarm
   become: no
-  shell: source ~/.bashrc && colcon build {% if inventory_hostname in groups['turtlebot'] %} --executor sequential {% endif %}
+  shell: |
+    source /opt/ros/humble/setup.bash && source ~/.bashrc && colcon build --executor sequential
   args:
     chdir: ~/ros/driving_swarm_infrastructure
     executable: /bin/bash
@@ -116,32 +116,24 @@
     - colcon
     - git
   
-
-- name: Create systemd unit for zenoh-bridge-ros2dds
+- name: Install systemd service for zenoh-bridge-ros2dds
   become: yes
-  copy:
-    dest: /etc/systemd/system/zenoh-bridge-ros2dds.service
-    content: |
-      [Unit]
-      Description=Zenoh ROS 2 DDS Bridge
-      After=network.target
-
-      [Service]
-      ExecStart=/usr/bin/zenoh-bridge-ros2dds -e tcp/192.168.8.220:7447
-      Restart=on-failure
-      User=root
-
-      [Install]
-      WantedBy=multi-user.target
+  template:
+    src: zenoh-bridge-ros2dds.service.j2
+    dest: /lib/systemd/system/zenoh-bridge-ros2dds.service
+    owner: root
+    group: root
     mode: '0644'
   tags:
     - zenoh
 
-- name: Enable zenoh-bridge-ros2dds systemd service
+- name: Enable and start zenoh-bridge-ros2dds
   become: yes
-  systemd:
+  service:
     name: zenoh-bridge-ros2dds
     enabled: yes
-    daemon_reload: yes
     state: started
+  tags:
+    - zenoh
+
 

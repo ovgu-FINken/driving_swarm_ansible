@@ -1,0 +1,17 @@
+[Unit]
+Description=Custom Zenoh Bridge for ROS2
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/zenoh-bridge-ros2dds -e tcp/192.168.8.220:7447
+Restart=on-failure
+RestartSec=2
+Environment=RUST_LOG=info
+User=turtle
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
