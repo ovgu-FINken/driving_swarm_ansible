@@ -1,0 +1,16 @@
+{
+  plugins: {
+    ros2dds: {
+      nodename: "zenoh_bridge_ros2dds",
+      namespace: "/turtlebot{{ domain_id }}",
+      domain: {{ domain_id }},
+      ros_localhost_only: true,
+      ros_automatic_discovery_range: "LOCALHOST"
+    }
+  },
+  connect: {
+    endpoints: [
+      "tcp/192.168.8.220:7447"
+    ]
+  }
+}
