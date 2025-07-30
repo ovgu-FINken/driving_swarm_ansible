@@ -2,11 +2,11 @@
 ## domain IDs 0-101 and 215-232 can be safely used 
 
 [turtlebot]
-# 10.61.10.211 ansible_connection=ssh ansible_ssh_user=turtle domain_id=1
-# 10.61.10.247 ansible_connection=ssh ansible_ssh_user=turtle domain_id=2
+192.168.8.211 ansible_connection=ssh ansible_ssh_user=turtle domain_id=1
+#10.61.10.246 ansible_connection=ssh ansible_ssh_user=turtle domain_id=3
 # 10.61.10.
-10.61.10.194 ansible_connection=ssh ansible_ssh_user=turtle domain_id=4
-10.61.10.226 ansible_connection=ssh ansible_ssh_user=turtle domain_id=5
+#10.61.10.194 ansible_connection=ssh ansible_ssh_user=turtle domain_id=4
+#10.61.10.226 ansible_connection=ssh ansible_ssh_user=turtle domain_id=5
 
 [demo]
 #10.61.10.232 ansible_connection=ssh ansible_ssh_user=turtle domain_id=101
